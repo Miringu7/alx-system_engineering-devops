@@ -1,2 +1,2 @@
 #!/bin/bash
-head -n3 lacta | tail -1
+cat lacta | fmt | head -n3 | tail -1
