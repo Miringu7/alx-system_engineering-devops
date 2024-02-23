@@ -3,7 +3,5 @@
 
 process_name="4-to_infinity_and_beyond"
 pid=$(pgrep -fi "$process_name")
-
 second_line=$(echo "$pid" | awk 'NR==2')
-
 kill "$second_line"
