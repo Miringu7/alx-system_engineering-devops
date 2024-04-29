@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+#update package lists and install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Get the hostname of the server
+hostname=$(hostname)
+
+#configure Nginx custom response header
+cat <<EOF | sudo tee /etc/nginx/conf.d/custom_response_header.conf
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    # Add custom response header
+    add_header X-served-By $hostname
+}
+EOF
+
+# Test Nginx configuration
+sudo nginx -t
+
+# Reload Nginx to apply changes
+sudo systemctl reload nginx
