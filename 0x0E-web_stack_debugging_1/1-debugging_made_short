@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# setting up server to curl port 80 with no issues
+sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
+sudo nginx -s reload
