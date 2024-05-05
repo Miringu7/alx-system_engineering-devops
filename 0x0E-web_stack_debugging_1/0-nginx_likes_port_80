@@ -1,11 +1,27 @@
 #!/usr/bin/env bash
-# 0. Nginx likes port 80
+# Start Nginx service
+if service nginx status >/dev/null 2>&1; then
+    echo "Nginx is already running."
+else
+    echo "Starting Nginx..."
+    sudo service nginx start
+    echo "Nginx started successfully."
+fi
 
-#backup default nginx conf file
-cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+# Ensure Nginx listens on port 80
+if netstat -tuln | grep -q ":80 "; then
+    echo "Nginx is already listening on port 80."
+else
+    echo "Configuring Nginx to listen on port 80..."
+    # Modify the Nginx configuration file to listen on port 80
+    sudo sed -i 's/\(listen\s*\)80;/\180;/g' /etc/nginx/sites-available/default
+    # Reload Nginx to apply changes
+    sudo service nginx reload
+    echo "Nginx is now listening on port 80."
+fi
 
-#edit the default nginx conf file to listen on port 80
-sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
-
-#restart nginx to apply changes
-sudo service nginx restart
+# Output server's active IPv4 IPs
+echo "Server's active IPv4 IPs listening on port 80:"
+ip addr show | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | while read -r ip; do
+    echo "$ip"
+done

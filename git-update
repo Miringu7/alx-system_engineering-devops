@@ -1,7 +1,6 @@
 #!/bin/bash
 git add .
 echo "input commit message"
-read c-message
-message="c-message.txt"
-git commit -m "$message"
+read message
+git commit -m "$message" &&
 git push
