@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
 # setting up server to curl port 80 with no issues
-sudo service nginx start
-sudo nginx -t
-sudo sed -i 's/\(listen\s*\)80;/\180;/g' /etc/nginx/sites-available/default
-sudo service nginx reload
+sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-available/default
+sudo nginx -s reload
