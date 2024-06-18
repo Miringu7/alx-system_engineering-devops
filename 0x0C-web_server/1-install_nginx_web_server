@@ -9,12 +9,6 @@
 sudo apt get update -y -qq && \
          sudo apt get install nginx -y
 
-# Check if Nginx installation was successful
-if [ $? -ne 0 ]; then
-    echo "Failed to install nginx."
-    exit 1
-fi
-
 # Configure Nginx to listen on port 80
 sudo service nginx start
 
