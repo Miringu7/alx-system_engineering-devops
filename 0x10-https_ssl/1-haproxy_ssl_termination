@@ -37,16 +37,17 @@ frontend miringu-tech-frontend
         bind *:80
         mode http
         http-request redirect scheme https code 301 unless { ssl_fc }
-        http-request set-header X_Forwarded-Proto http
+        reqadd X-Forwarded-Proto:\ http
         default_backend miringu-tech-backend
 
 frontend miringu-tech-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/miringu.tech.pem
-        http-request set-header X-Forwarded-Proto https
+        bind *:443 ssl crt /etc/ssl/private/miringu.tech.pem
+        reqadd X-Forwarded-Proto:\ https
         default_backend miringu-tech-backend
 
 
 backend miringu-tech-backend
+    redirect scheme https if !{ ssl_fc }
     balance roundrobin
     server 531476-web-01 100.25.142.103:80 check
     server 531476-web-02 100.24.244.138:80 check
