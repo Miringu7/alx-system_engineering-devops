@@ -19,4 +19,4 @@ sudo service nginx restart
 ufw allow 80/tcp
 
 # Restart Nginx to ensure everything is applied correctly
-sudo service nginx restart
+sudo service nginx start
