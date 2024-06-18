@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # setting up server to curl port 80 with no issues
-sed -i 's/listen 80 default_server;/listen 80;/' /etc/nginx/sites-available/default
+sed -i 's/listen 80 default_server/listen 80/' /etc/nginx/sites-available/default
 systemctl start nginx
 systemctl enable nginx
